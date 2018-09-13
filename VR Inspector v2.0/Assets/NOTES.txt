@@ -1,0 +1,80 @@
+https://vrtoolkit.readme.io/docs/vrtk_controllerevents
+
+Transform
+* allow user to set default transform to return to
+
+PropertiesChanger
+* if transformable
+    - if has light component -> change light properties
+    - else if has mesh -> change material properties
+
+VR Inspector
+
+* Cannot submit assets to asset store that contain other assets
+	- https://unity3d.com/asset-store/sell-assets/submission-guidelines
+* found cool matcap shader asset
+	- https://assetstore.unity.com/packages/vfx/shaders/free-matcap-shaders-8221
+* in-game transform gizmos
+	- https://github.com/HiddenMonk/Unity3DRuntimeTransformGizmo
+* magnifying glass
+	- http://www.theappguruz.com/blog/magnify-glass-effect-in-unity
+	
+* 3D UI https://www.interaction-design.org/literature/book/the-encyclopedia-of-human-computer-interaction-2nd-ed/3d-user-interfaces
+* https://www.interaction-design.org/literature/book/the-encyclopedia-of-human-computer-interaction-2nd-ed/data-visualization-for-human-perception
+
+* select object
+	- set a scale
+		select measure start
+		select measure end
+		give value
+	x transform
+		rotate
+		scale
+		translate
+		copy transform/mirror transform to another object
+	- material
+		x matcap
+		shaded texture
+		shadeless texture
+
+* disable individual scale axes
+* scale with joystick, push up and down
+    - only uniform
+* have option to show meter stick
+* don't show scale gizmo
+* center translate gizmo
+* center rotate
+* toggle between transform values using controller button or joy stick
+* click add model and then get a list of names
+* menu can be grabbed and positioned in space
+* try with menu 1m by 1m
+* https://www.youtube.com/watch?v=f5Eg3t3glWs
+
+8.29.18
+--------------------------
+[X] Add menu on ground
+[ ] Add buttons
+	[X] transform
+	[X] add light
+	[ ] Materials
+	[X] Add statue
+		- scale to be 1 meter
+	[ ] Set statue scale
+[ ] Read matt paper
+
+* how to visualize lights? All the time? Just when editting?
+* need to make it so that transformGizmo only acts on certain objects
+* going to have to add light controls
+* started material
+	- make canvas that autopopulates with swatches for the materials
+	- instantiate or enable/disable canvas and place next to selected object
+
+Still ToDo
+[ ] Fix outline shader
+[ ] Better way to visualize lights
+[ ] Turn on and off elements properly
+	- only show light box when editing
+[ ] Rename VRInspector to main canvas manager
+[ ] UI for materials
+	- slider with buttons, animate slide
+[ ] Visualize light area?
