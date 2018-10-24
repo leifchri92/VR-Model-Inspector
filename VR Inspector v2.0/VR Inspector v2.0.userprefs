@@ -9,4 +9,9 @@
       <File FileName="Assets\_Scripts\ModelsPanel\ModelListEntry.cs" Line="30" Column="8" />
       <File FileName="Assets\RuntimeGizmo\Shader\Resources\Outline.shader" Line="6" Column="49" />
     </Files>
-  </MonoDevelop.Ide.
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
