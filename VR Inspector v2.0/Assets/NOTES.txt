@@ -1,3 +1,32 @@
+In VR, transform gizmos aren't drawing
+	- get distance multiplier is working fine
+
+4.837877
+
+Bugs
+--------------------------------
+* origin isn't right on all models for transform
+* transform outline isn't correct size
+* models aren't placed correctly
+* overlapping buttons are triggered 
+* gizmo resizes with head turn
+
+[X] toggle to switch between models and lights
+[X] combine lights and models panel into scene panel
+[X] Add light
+[X] Change light properties
+[X] Deselect model Properties
+[X] Add model
+[X] Select model to add
+[X] Scale model
+[X] Scale scale with model
+[X] Fix transform gizmo
+	[X] render
+	[X] deselection
+	[X] sensitivity
+[ ] Grabbable everything
+[ ] Make github page
+
 https://vrtoolkit.readme.io/docs/vrtk_controllerevents
 
 Transform

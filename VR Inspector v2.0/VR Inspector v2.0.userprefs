@@ -1,0 +1,12 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\NOTES.txt">
+    <Files>
+      <File FileName="Assets\NOTES.txt" Line="29" Column="1" />
+      <File FileName="Assets\RuntimeGizmo\TransformGizmo.cs" Line="1064" Column="67" />
+      <File FileName="Assets\_Scripts\ModelsPanel\ModelSelectionPanel.cs" Line="30" Column="35" />
+      <File FileName="Assets\_Scripts\ModelsPanel\ModelsPanel.cs" Line="74" Column="18" />
+      <File FileName="Assets\_Scripts\ModelsPanel\ModelListEntry.cs" Line="30" Column="8" />
+      <File FileName="Assets\RuntimeGizmo\Shader\Resources\Outline.shader" Line="6" Column="49" />
+    </Files>
+  </MonoDevelop.Ide.

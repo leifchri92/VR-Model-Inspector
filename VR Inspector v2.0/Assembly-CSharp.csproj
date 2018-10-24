@@ -53,14 +53,39 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\_Scripts\ButtonColorToggle.cs" />
-     <Compile Include="Assets\_Scripts\CameraMove.cs" />
-     <Compile Include="Assets\_Scripts\ModelList.cs" />
-     <Compile Include="Assets\_Scripts\ModelListEntry.cs" />
-     <Compile Include="Assets\_Scripts\ModelsPanel.cs" />
-     <Compile Include="Assets\_Scripts\ModifyPanel.cs" />
+     <Compile Include="Assets\_Scripts\DeleteConfirmation.cs" />
+     <Compile Include="Assets\_Scripts\LightsPanel.cs" />
+     <Compile Include="Assets\_Scripts\ModelsPanel\ModelButton.cs" />
+     <Compile Include="Assets\_Scripts\ModelsPanel\ModelList.cs" />
+     <Compile Include="Assets\_Scripts\ModelsPanel\ModelListEntry.cs" />
+     <Compile Include="Assets\_Scripts\ModelsPanel\ModelSelectionPanel.cs" />
+     <Compile Include="Assets\_Scripts\ModelsPanel\ModelsPanel.cs" />
+     <Compile Include="Assets\_Scripts\Modify\LightPropertiesPanel.cs" />
+     <Compile Include="Assets\_Scripts\Modify\MaterialButton.cs" />
+     <Compile Include="Assets\_Scripts\Modify\MaterialsPanel.cs" />
+     <Compile Include="Assets\_Scripts\Modify\ModifyPanel.cs" />
+     <Compile Include="Assets\_Scripts\NumPanel\NumPanelCanvas.cs" />
      <Compile Include="Assets\_Scripts\PropertiesChanger.cs" />
-     <Compile Include="Assets\_Scripts\VRInspector.cs" />
+     <Compile Include="Assets\_Scripts\Scale.cs" />
+     <Compile Include="Assets\_Scripts\SetScale.cs" />
+     <Compile Include="Assets\_Scripts\Utilities\ButtonColorToggle.cs" />
+     <Compile Include="Assets\_Scripts\Utilities\CameraMove.cs" />
+     <Compile Include="Assets\_Scripts\VrmiModel.cs" />
+     <Compile Include="Assets\HSVPicker\Enums\ColorValues.cs" />
+     <Compile Include="Assets\HSVPicker\Events\ColorChangedEvent.cs" />
+     <Compile Include="Assets\HSVPicker\Events\HSVChangedEvent.cs" />
+     <Compile Include="Assets\HSVPicker\Other\ColorPickerTester.cs" />
+     <Compile Include="Assets\HSVPicker\Other\TiltWindow.cs" />
+     <Compile Include="Assets\HSVPicker\UI\ColorImage.cs" />
+     <Compile Include="Assets\HSVPicker\UI\ColorLabel.cs" />
+     <Compile Include="Assets\HSVPicker\UI\ColorPicker.cs" />
+     <Compile Include="Assets\HSVPicker\UI\ColorPresets.cs" />
+     <Compile Include="Assets\HSVPicker\UI\ColorSlider.cs" />
+     <Compile Include="Assets\HSVPicker\UI\ColorSliderImage.cs" />
+     <Compile Include="Assets\HSVPicker\UI\HexColorField.cs" />
+     <Compile Include="Assets\HSVPicker\UI\SVBoxSlider.cs" />
+     <Compile Include="Assets\HSVPicker\UtilityScripts\BoxSlider.cs" />
+     <Compile Include="Assets\HSVPicker\UtilityScripts\HSVUtil.cs" />
      <Compile Include="Assets\JMO Assets\MatCap Shaders\Demo\Assets\MC_AutoRotate.cs" />
      <Compile Include="Assets\JMO Assets\MatCap Shaders\Demo\Assets\MC_SwitchTexture.cs" />
      <Compile Include="Assets\QuickOutline\Scripts\Outline.cs" />
@@ -803,6 +828,10 @@
  <Reference Include="Boo.Lang">
  <HintPath>D:/Program Files/Editor/Data/MonoBleedingEdge/lib/mono/unity/Boo.Lang.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{D4D68844-EFFC-2168-424C-8F5FF412D6E7}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

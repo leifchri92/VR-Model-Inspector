@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using CommandUndoRedo;
+using VRTK;
 
 namespace RuntimeGizmos
 {
@@ -10,9 +11,15 @@ namespace RuntimeGizmos
 	//you should call ClearTargets before doing so just to be sure nothing unexpected happens... as well as call UndoRedoManager.Clear()
 	//For example, if you select an object that has children, move the children elsewhere, deselect the original object, then try to add those old children to the selection, I think it wont work.
 
-	[RequireComponent(typeof(Camera))]
+	// [RequireComponent(typeof(Camera))]
 	public class TransformGizmo : MonoBehaviour
 	{
+		// leifchri edit
+		public float moveSpeed = 0.1f;
+		public float rotateSpeed = 0.1f;
+		public float scaleSpeed = 0.1f;
+		// leifchri edit
+
 		public TransformSpace space = TransformSpace.Global;
 		public TransformType type = TransformType.Move;
 		public TransformPivot pivot = TransformPivot.Pivot;
@@ -81,20 +88,56 @@ namespace RuntimeGizmos
 		List<Renderer> renderersBuffer = new List<Renderer>();
 		List<Material> materialsBuffer = new List<Material>();
 
+		// public Camera myCamera;
 		Camera myCamera;
 
 		static Material lineMaterial;
 		static Material outlineMaterial;
 
+		// leifchri edit
+		private VRTK_ControllerEvents controllerEvents;
+		private bool triggerIsPressed = false;
+		private bool touchPadIsTouched = false;
+		// leifchri edit
+
 		void Awake()
 		{
-			myCamera = GetComponent<Camera>();
+			myCamera = Camera.main; // leifchri edit
 			SetMaterial();
 		}
+
+		// leifchri edit
+		void OnEnable() 
+		{
+			Camera.onPostRender += OnPostRenderGizmos;
+
+			controllerEvents = (controllerEvents == null ? GetComponent<VRTK_ControllerEvents>() : controllerEvents);
+			if (controllerEvents == null)
+			{
+				VRTK_Logger.Error(VRTK_Logger.GetCommonMessage(VRTK_Logger.CommonMessageKeys.REQUIRED_COMPONENT_MISSING_FROM_GAMEOBJECT, "VRTK_ControllerEvents_ListenerExample", "VRTK_ControllerEvents", "the same"));
+				return;
+			}
+
+			//Setup controller event listeners
+			controllerEvents.TriggerPressed += DoTriggerPressed;
+			controllerEvents.TriggerReleased += DoTriggerReleased;
+			controllerEvents.TouchpadTouchStart += DoTouchpadTouchStart;
+			controllerEvents.TouchpadTouchEnd += DoTouchpadTouchEnd;
+		}
+		// leifchri edit
 
 		void OnDisable()
 		{
 			ClearTargets(); //Just so things gets cleaned up, such as removing any materials we placed on objects.
+			// leifchri edit
+			Camera.onPostRender -= OnPostRenderGizmos;
+			if (controllerEvents != null) {
+				controllerEvents.TriggerPressed -= DoTriggerPressed;
+				controllerEvents.TriggerReleased -= DoTriggerReleased;
+				controllerEvents.TouchpadTouchStart -= DoTouchpadTouchStart;
+				controllerEvents.TouchpadTouchEnd -= DoTouchpadTouchEnd;
+			}
+			// leifchri edit
 		}
 
 		void OnDestroy()
@@ -128,7 +171,7 @@ namespace RuntimeGizmos
 			SetLines();
 		}
 
-		void OnPostRender()
+		void OnPostRenderGizmos(Camera cam)
 		{
 			if(mainTargetRoot == null) return;
 
@@ -189,6 +232,31 @@ namespace RuntimeGizmos
 			}
 		}
 
+		// leifchri HACK start
+		public void EnterMoveMode() {
+			type = TransformType.Move;
+		}
+		public void EnterRotateMode() {
+			type = TransformType.Rotate;
+		}
+		public void EnterScaleMode() {
+			type = TransformType.Scale;
+		}
+
+		private void DoTriggerPressed(object sender, ControllerInteractionEventArgs e) {
+			triggerIsPressed = true;
+		}
+		private void DoTriggerReleased(object sender, ControllerInteractionEventArgs e) {
+			triggerIsPressed = false;
+		}
+		private void DoTouchpadTouchStart(object sender, ControllerInteractionEventArgs e) {
+			touchPadIsTouched = true;
+		}
+		private void DoTouchpadTouchEnd(object sender, ControllerInteractionEventArgs e) {
+			touchPadIsTouched = false;
+		}
+		// leifchri HACk end
+
 		void SetSpaceAndType()
 		{
 			if(Input.GetKey(ActionKey)) return;
@@ -236,7 +304,7 @@ namespace RuntimeGizmos
 		{
 			if(mainTargetRoot != null)
 			{
-				if(nearAxis != Axis.None && Input.GetMouseButtonDown(0))
+				if(nearAxis != Axis.None && (triggerIsPressed && touchPadIsTouched)) // leifchri edit Input.GetMouseButtonDown(0) 
 				{
 					StartCoroutine(TransformSelected(type));
 				}
@@ -262,9 +330,9 @@ namespace RuntimeGizmos
 				transformCommands.Add(new TransformCommand(this, targetRootsOrdered[i]));
 			}
 
-			while(!Input.GetMouseButtonUp(0))
+			while(triggerIsPressed && touchPadIsTouched) // leifchri !Input.GetMouseButtonUp
 			{
-				Ray mouseRay = myCamera.ScreenPointToRay(Input.mousePosition);
+				Ray mouseRay = new Ray(transform.position, transform.forward); // leifchri edit myCamera.ScreenPointToRay(Input.mousePosition)
 				Vector3 mousePosition = Geometry.LinePlaneIntersect(mouseRay.origin, mouseRay.direction, originalPivot, planeNormal);
 
 				if(previousMousePosition != Vector3.zero && mousePosition != Vector3.zero)
@@ -272,7 +340,7 @@ namespace RuntimeGizmos
 					if(type == TransformType.Move)
 					{
 						float moveAmount = ExtVector3.MagnitudeInDirection(mousePosition - previousMousePosition, projectedAxis) * moveSpeedMultiplier;
-						Vector3 movement = axis * moveAmount;
+						Vector3 movement = axis * moveAmount * moveSpeed; // leifchri edit
 
 						for(int i = 0; i < targetRootsOrdered.Count; i++)
 						{
@@ -293,13 +361,16 @@ namespace RuntimeGizmos
 						
 						Vector3 targetScaleAmount = Vector3.one;
 						if(nearAxis == Axis.Any) targetScaleAmount = (ExtVector3.Abs(mainTargetRoot.localScale.normalized) * scaleAmount);
-						else targetScaleAmount = localAxis * scaleAmount;
+						else targetScaleAmount = localAxis * scaleAmount * scaleSpeed; // leifchri edit
 
 						for(int i = 0; i < targetRootsOrdered.Count; i++)
 						{
 							Transform target = targetRootsOrdered[i];
 
 							Vector3 targetScale = target.localScale + targetScaleAmount;
+
+							if (Math.Min(Math.Min(targetScale.x, targetScale.y), targetScale.z) < 0.2)
+								break;
 
 							if(pivot == TransformPivot.Pivot)
 							{
@@ -334,6 +405,8 @@ namespace RuntimeGizmos
 							Vector3 projected = (nearAxis == Axis.Any || ExtVector3.IsParallel(axis, planeNormal)) ? planeNormal : Vector3.Cross(axis, planeNormal);
 							rotateAmount = (ExtVector3.MagnitudeInDirection(mousePosition - previousMousePosition, projected) * rotateSpeedMultiplier) / GetDistanceMultiplier();
 						}
+
+						rotateAmount *= rotateSpeed;
 
 						for(int i = 0; i < targetRootsOrdered.Count; i++)
 						{
@@ -387,13 +460,13 @@ namespace RuntimeGizmos
 	
 		void GetTarget()
 		{
-			if(nearAxis == Axis.None && Input.GetMouseButtonDown(0))
+			if(nearAxis == Axis.None && triggerIsPressed && touchPadIsTouched) // leifchri edit Input.GetMouseButtonDown(0)
 			{
 				bool isAdding = Input.GetKey(AddSelection);
 				bool isRemoving = Input.GetKey(RemoveSelection);
 
 				RaycastHit hitInfo; 
-				if(Physics.Raycast(myCamera.ScreenPointToRay(Input.mousePosition), out hitInfo))
+				if(Physics.Raycast(new Ray(transform.position, transform.forward), out hitInfo)) // leifchri edit myCamera.ScreenPointToRay(Input.mousePosition)
 				{
 					Transform target = hitInfo.transform;
 
@@ -692,7 +765,7 @@ namespace RuntimeGizmos
 			else if(zClosestDistance <= minSelectedDistanceCheck && zClosestDistance <= xClosestDistance && zClosestDistance <= yClosestDistance) nearAxis = Axis.Z;
 			else if(type == TransformType.Rotate && mainTargetRoot != null)
 			{
-				Ray mouseRay = myCamera.ScreenPointToRay(Input.mousePosition);
+				Ray mouseRay = new Ray (transform.position, transform.forward);// leifchri edit myCamera.ScreenPointToRay(Input.mousePosition);
 				Vector3 mousePlaneHit = Geometry.LinePlaneIntersect(mouseRay.origin, mouseRay.direction, pivotPoint, (transform.position - pivotPoint).normalized);
 				if((pivotPoint - mousePlaneHit).sqrMagnitude <= (handleLength * GetDistanceMultiplier()).Squared()) nearAxis = Axis.Any;
 			}
@@ -700,7 +773,7 @@ namespace RuntimeGizmos
 
 		float ClosestDistanceFromMouseToLines(List<Vector3> lines)
 		{
-			Ray mouseRay = myCamera.ScreenPointToRay(Input.mousePosition);
+			Ray mouseRay = new Ray (transform.position, transform.forward);// leifchri edit myCamera.ScreenPointToRay(Input.mousePosition);
 
 			float closestDistance = float.MaxValue;
 			for(int i = 0; i < lines.Count; i += 2)
@@ -736,7 +809,7 @@ namespace RuntimeGizmos
 		float GetDistanceMultiplier()
 		{
 			if(mainTargetRoot == null) return 0f;
-			return Mathf.Max(.01f, Mathf.Abs(ExtVector3.MagnitudeInDirection(pivotPoint - transform.position, myCamera.transform.forward)));
+			return Mathf.Max(.01f, Mathf.Abs(ExtVector3.MagnitudeInDirection(pivotPoint - Camera.main.transform.position, Camera.main.transform.forward))); // leifchri edit myCamera.transform.forward
 		}
 
 		void SetLines()
