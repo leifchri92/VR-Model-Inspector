@@ -1,12 +1,12 @@
 # Virtual Reality Model Inspector (VRMI) #
 This repository contains code accompanying the publication
 
-	[M. Brennan and L. Christiansen, *Virtual Materiality: A Virtual Reality Framework for the Analysis and Visualization of Cultural Heritage 3D Models*, in The Proceedings of Digital Heritage 2018, forthcoming.](https://github.com/leifchri92/VR-Model-Inspector/tree/master/publication/Brennan_Christiansen_DH18.pdf)
+[M. Brennan and L. Christiansen, *Virtual Materiality: A Virtual Reality Framework for the Analysis and Visualization of Cultural Heritage 3D Models*, in The Proceedings of Digital Heritage 2018, forthcoming.](https://github.com/leifchri92/VR-Model-Inspector/tree/master/publication/Brennan_Christiansen_DH18.pdf)
 
 ## How To Use ##
 
 ### Requirements: ###
-* VR Headset with controllers (HTC Vive or Oculus Rift)
+* [HTC Vive](https://www.vive.com/eu/)
 * [Unity](https://unity3d.com/)
 * [SteamVR](https://store.steampowered.com/steamvr)
 
@@ -23,6 +23,19 @@ To add a model to the app:
 5. Run the app and all prefabs in the Resources/Models will be loaded automatically.
 
 ### Interaction ###
+To interact with the menu connected to your left hand, using the right controller, touch the touch pad with your thumb to begin interaction and pull the trigger to select.
+
+#### Add Models and Lights ####
+Click "Add" in the "Models" menu to add models and lights. Click a model or light thumbnail to add it to the scene. Once a model is in the scene, you may set the scale of the model using the set scale button.
+
+#### Set Scale ####
+Select two points on the object. Then using the numbpad on the left, enter the real world scale, in meters, of the selected distance. Finally, select "Rescale" to resize the object.
+
+#### Transform ####
+Select models to translate and rotate using the appropriate gizmos.
+
+#### Properties ####
+With "Properties" selected, you may change the materials of models and properties of the color, range, intensity, and angle of lights.
 
 ## Building the App ##
 Once models have been added to the scene, you may build the project as a standalone executable.
