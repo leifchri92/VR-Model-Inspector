@@ -43,3 +43,7 @@ Once models have been added to the scene, you may build the project as a standal
 A sample builds are available in the "Builds" folder.
 
 ## Improvements ##
+- [ ] Gizmo scaling
+- [ ] Gestural scaling
+- [ ] Saving model transformations
+- [ ] Mirroring model transformations
