@@ -38,7 +38,7 @@ Select models to translate and rotate using the appropriate gizmos.
 With "Properties" selected, you may change the materials of models and properties of the color, range, intensity, and angle of lights.
 
 ## Building the App ##
-Once models have been added to the scene, you may build the project as a standalone executable.
+Once models have been added to the scene, you may build the project as a standalone executable for any number of platforms supported by Unity. Interaction has only been tested for the HTC Vive.
 
 A sample builds are available in the "Builds" folder.
 
@@ -47,3 +47,4 @@ A sample builds are available in the "Builds" folder.
 - [ ] Gestural scaling
 - [ ] Saving model transformations
 - [ ] Mirroring model transformations
+- [ ] Additional headset support
