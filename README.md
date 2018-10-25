@@ -1,5 +1,5 @@
 # Virtual Reality Model Inspector (VRMI) #
-This repository contains code accompanying the publication
+This repository contains code accompanying the publication:
 
 [M. Brennan and L. Christiansen, *Virtual Materiality: A Virtual Reality Framework for the Analysis and Visualization of Cultural Heritage 3D Models*, in The Proceedings of Digital Heritage 2018, forthcoming.](https://github.com/leifchri92/VR-Model-Inspector/tree/master/publication/Brennan_Christiansen_DH18.pdf)
 
